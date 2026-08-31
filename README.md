@@ -140,19 +140,20 @@ http://127.0.0.1:5000
 
 ## Screenshots Section
 
-_Add screenshots here after running the app locally, e.g.:_
+<img width="1912" height="906" alt="Screenshot 2026-08-31 160753" src="https://github.com/user-attachments/assets/1f900cbf-9d23-424b-9d0b-eb4daa9976c4" />
 
-- `docs/screenshots/dashboard.png` — main dashboard with severity stat cards
-- `docs/screenshots/new_scan.png` — new scan form
-- `docs/screenshots/progress.png` — live scan progress view
-- `docs/screenshots/results.png` — findings list with severity filter
-- `docs/screenshots/report.png` — generated PDF report
+<img width="1910" height="916" alt="Screenshot 2026-08-31 160734" src="https://github.com/user-attachments/assets/117da06b-ce75-42fe-bae1-0fe83eac8eaf" />
+
+
 
 ---
 
 ## Sample Reports
 
-After running a scan, sample reports are generated into `reports/` as `scan_<id>_report.pdf` and `scan_<id>_report.html`. Include a de-identified sample report in your portfolio repo (e.g. `docs/sample-report.pdf`) generated against a system you're authorized to test, or a deliberately-vulnerable practice app such as OWASP Juice Shop / DVWA running locally.
+<img width="1853" height="927" alt="Screenshot 2026-08-31 161052" src="https://github.com/user-attachments/assets/f0fc5c5e-40f8-424b-bd0c-5f12dc8af11d" />
+
+<img width="1890" height="912" alt="Screenshot 2026-08-31 160820" src="https://github.com/user-attachments/assets/8c106004-a458-4d88-b212-10b04082695c" />
+
 
 ---
 
