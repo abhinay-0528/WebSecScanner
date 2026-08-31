@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Scan History - WebSec Scanner{% endblock %}
+{% block page_title %}Scan History{% endblock %}
+
+{% block content %}
+<div class="panel">
+  <div class="section-heading"><i class="bi bi-clock-history"></i> All Scans</div>
+
+  {% if scans %}
+  <div class="table-responsive">
+    <table class="table-sec">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Target</th>
+          <th>Date</th>
+          <th>Pages</th>
+          <th>Forms</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for scan in scans %}
+        <tr>
+          <td class="text-muted-sec">{{ scan.id }}</td>
+          <td class="mono">{{ scan.target }}</td>
+          <td class="text-muted-sec">{{ scan.date }}</td>
+          <td>{{ scan.pages_discovered }}</td>
+          <td>{{ scan.forms_discovered }}</td>
+          <td><span class="badge-status {{ scan.status }}">{{ scan.status }}</span></td>
+          <td>
+            {% if scan.status == 'Running' %}
+              <a href="{{ url_for('scan_progress', scan_id=scan.id) }}" class="btn btn-outline-sec btn-sm">Watch</a>
+            {% else %}
+              <a href="{{ url_for('results', scan_id=scan.id) }}" class="btn btn-outline-sec btn-sm">Results</a>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <i class="bi bi-inbox"></i>
+    <p>No scans have been run yet.</p>
+    <a href="{{ url_for('new_scan') }}" class="btn btn-primary-scan">Run Your First Scan</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

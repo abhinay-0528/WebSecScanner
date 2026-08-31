@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Scan Results - WebSec Scanner{% endblock %}
+{% block page_title %}Scan Results{% endblock %}
+
+{% block content %}
+
+<div class="panel mb-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+    <div>
+      <div class="section-heading mb-1"><i class="bi bi-globe2"></i> {{ scan.target }}</div>
+      <div class="text-muted-sec" style="font-size: 0.82rem;">
+        Scanned {{ scan.date }} &middot; {{ scan.pages_discovered }} pages &middot; {{ scan.forms_discovered }} forms
+        &middot; <span class="badge-status {{ scan.status }}">{{ scan.status }}</span>
+      </div>
+    </div>
+    <div class="d-flex gap-2">
+      <a href="{{ url_for('report_html', scan_id=scan.id) }}" target="_blank" class="btn btn-outline-sec btn-sm">
+        <i class="bi bi-filetype-html"></i> HTML Report
+      </a>
+      <a href="{{ url_for('report_pdf', scan_id=scan.id) }}" class="btn btn-primary-scan btn-sm">
+        <i class="bi bi-file-earmark-pdf"></i> Download PDF
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-6 col-lg-3">
+    <div class="stat-card high"><div class="stat-value">{{ counts.High }}</div><div class="stat-label">High</div></div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="stat-card medium"><div class="stat-value">{{ counts.Medium }}</div><div class="stat-label">Medium</div></div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="stat-card low"><div class="stat-value">{{ counts.Low }}</div><div class="stat-label">Low</div></div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="stat-card info"><div class="stat-value">{{ counts.Informational }}</div><div class="stat-label">Informational</div></div>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <div class="section-heading mb-0"><i class="bi bi-list-ul"></i> Findings ({{ findings|length }})</div>
+    <div class="d-flex gap-2 align-items-center">
+      <input type="text" id="finding-search" class="form-control form-control-sm" placeholder="Search findings..." style="width: 220px;">
+      <select id="severity-filter" class="form-select form-select-sm" style="width: 170px;" onchange="applySeverityFilter(this.value)">
+        <option value="All" {{ 'selected' if severity_filter == 'All' }}>All Severities</option>
+        <option value="High" {{ 'selected' if severity_filter == 'High' }}>High</option>
+        <option value="Medium" {{ 'selected' if severity_filter == 'Medium' }}>Medium</option>
+        <option value="Low" {{ 'selected' if severity_filter == 'Low' }}>Low</option>
+        <option value="Informational" {{ 'selected' if severity_filter == 'Informational' }}>Informational</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="findings-list">
+    {% if findings %}
+      {% for f in findings %}
+      <div class="finding-card sev-{{ f.severity }}" data-search="{{ (f.vulnerability ~ ' ' ~ f.description ~ ' ' ~ f.url)|lower }}">
+        <div class="d-flex justify-content-between align-items-start gap-2">
+          <div class="finding-title">{{ f.vulnerability }}</div>
+          <span class="badge-sev badge-{{ f.severity }}">{{ f.severity }}</span>
+        </div>
+        {% if f.url %}<div class="finding-meta">{{ f.url }}</div>{% endif %}
+        <div class="finding-field"><b>Description:</b> {{ f.description }}</div>
+        {% if f.evidence %}<div class="finding-field"><b>Evidence:</b> {{ f.evidence }}</div>{% endif %}
+        {% if f.recommendation %}<div class="finding-field"><b>Recommendation:</b> {{ f.recommendation }}</div>{% endif %}
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="empty-state">
+        <i class="bi bi-check2-circle"></i>
+        <p>No findings match this filter.</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+function applySeverityFilter(value) {
+  const url = new URL(window.location);
+  url.searchParams.set('severity', value);
+  window.location = url;
+}
+
+document.getElementById('finding-search').addEventListener('input', function(e) {
+  const term = e.target.value.toLowerCase();
+  document.querySelectorAll('.finding-card').forEach(card => {
+    card.style.display = card.dataset.search.includes(term) ? '' : 'none';
+  });
+});
+</script>
+{% endblock %}

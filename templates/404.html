@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Not Found - WebSec Scanner{% endblock %}
+{% block page_title %}404{% endblock %}
+{% block content %}
+<div class="empty-state">
+  <i class="bi bi-exclamation-diamond"></i>
+  <p>That scan or page could not be found.</p>
+  <a href="{{ url_for('dashboard') }}" class="btn btn-primary-scan">Back to Dashboard</a>
+</div>
+{% endblock %}
