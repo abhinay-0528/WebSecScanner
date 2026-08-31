@@ -1,3 +1,4 @@
+
 # WebSec Scanner
 
 A lightweight, modular **Web Application Security Scanner** built with Python and Flask. It crawls a target web application and runs a suite of non-destructive detection modules — security headers, SSL/TLS, sensitive file exposure, form hygiene, reflected XSS, SQL injection error indicators, open redirects, and directory discovery — then presents the results on a dark, cybersecurity-themed dashboard and generates downloadable PDF/HTML reports.
@@ -172,3 +173,7 @@ After running a scan, sample reports are generated into `reports/` as `scan_<id>
 ## Disclaimer
 
 This tool is provided for educational purposes and authorized security testing only. Scanning systems without explicit permission from the owner may be illegal in your jurisdiction. The authors accept no liability for misuse.
+=======
+# WebSecScanner
+Modular, non-invasive website application vulnerabilities scanner developed using Python and Flask. It can crawl target websites to check for lack of security headers, SSL/TLS problems, exposure of sensitive files, XSS, SQLi, open redirects and many others.
+
